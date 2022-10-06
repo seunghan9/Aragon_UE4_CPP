@@ -28,4 +28,7 @@ protected:
 	void MoveLeftRight(float _Value);
 	void MoveUpDown(float _Value);
 	virtual void PimaryAttack();
+	virtual void Skill1();
+	virtual void Skill2();
+	virtual void Skill3();
 };
