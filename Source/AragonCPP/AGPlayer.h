@@ -16,7 +16,6 @@ class ARAGONCPP_API AAGPlayer : public AAGCharacterParent
 public:
 	AAGPlayer();
 
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 protected:
 
 	UPROPERTY(VisibleAnywhere)
@@ -25,10 +24,18 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* Camera;
 
+public:
+	
 	void MoveLeftRight(float _Value);
+	
 	void MoveUpDown(float _Value);
+	
 	virtual void PimaryAttack();
+	
 	virtual void Skill1();
+	
 	virtual void Skill2();
+
 	virtual void Skill3();
+
 };

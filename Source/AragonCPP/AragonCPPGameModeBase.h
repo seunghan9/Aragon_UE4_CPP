@@ -14,4 +14,6 @@ class ARAGONCPP_API AAragonCPPGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 	
+public:
+	AAragonCPPGameModeBase();
 };

@@ -15,6 +15,11 @@ class ARAGONCPP_API AAGGideon : public AAGPlayer
 	GENERATED_BODY()
 public:
 	AAGGideon();
+	virtual void Tick(float DeltaTime) override;
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
 
 protected:
 	virtual void PimaryAttack() override;

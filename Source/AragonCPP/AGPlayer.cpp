@@ -4,6 +4,7 @@
 #include "AGPlayer.h"
 #include "GameFramework\SpringArmComponent.h"
 #include "Camera\CameraComponent.h"
+
 AAGPlayer::AAGPlayer()
 {
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
@@ -19,22 +20,6 @@ AAGPlayer::AAGPlayer()
 
 }
 
-void AAGPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-
-	PlayerInputComponent->BindAxis(TEXT("MoveLeftRight"), this, &AAGPlayer::MoveLeftRight);
-
-	PlayerInputComponent->BindAxis(TEXT("MoveUpDown"), this, &AAGPlayer::MoveUpDown);
-
-	PlayerInputComponent->BindAction(TEXT("PrimaryAttack"), EInputEvent::IE_Pressed, this,&AAGPlayer::PimaryAttack);
-
-	PlayerInputComponent->BindAction(TEXT("Skill1"), EInputEvent::IE_Pressed, this, &AAGPlayer::Skill1);
-
-	PlayerInputComponent->BindAction(TEXT("Skill2"), EInputEvent::IE_Pressed, this, &AAGPlayer::Skill2);
-
-	PlayerInputComponent->BindAction(TEXT("Skill3"), EInputEvent::IE_Pressed, this, &AAGPlayer::Skill3);
-
-}
 
 void AAGPlayer::MoveLeftRight(float _Value)
 {

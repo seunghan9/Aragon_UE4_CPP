@@ -7,6 +7,7 @@
 #include "GameFramework/Character.h"
 #include "AGCharacterParent.generated.h"
 
+
 UCLASS()
 class ARAGONCPP_API AAGCharacterParent : public ACharacter
 {
@@ -29,18 +30,14 @@ public:
 
 protected:
 	UPROPERTY()
-	int32 hp;
+	int32 Hp;
 
-	UPROPERTY()
-	int32 maxHp;
+	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category = Battle)
+	int32 MaxHp;
 
-	UPROPERTY()
-	int32 defaultDamage;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Battle)
+	int32 DefaultDamage;
 
-	UPROPERTY()
-	AController* myController;
-	
 protected:
 	void UpdateHp(int32 _damage);
-
 };

@@ -2,4 +2,10 @@
 
 
 #include "AragonCPPGameModeBase.h"
+#include "AGGideon.h"
+
+AAragonCPPGameModeBase::AAragonCPPGameModeBase()
+{
+
+}
 

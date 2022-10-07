@@ -16,6 +16,10 @@ AAGSavarog::AAGSavarog()
 
 }
 
+void AAGSavarog::Tick(float DeltaTime)
+{
+}
+
 void AAGSavarog::PimaryAttack()
 {
 	UE_LOG(LogTemp, Warning, TEXT("AAGSavarog Attack"));

@@ -3,12 +3,14 @@
 
 #include "AGCharacterParent.h"
 
+
 // Sets default values
 AAGCharacterParent::AAGCharacterParent()
-	:hp(maxHp)
+	:Hp(MaxHp)
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	
 	
 }
 
@@ -16,14 +18,12 @@ AAGCharacterParent::AAGCharacterParent()
 void AAGCharacterParent::BeginPlay()
 {
 	Super::BeginPlay();
-	myController = GetController();
 }
 
 // Called every frame
 void AAGCharacterParent::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 // Called to bind functionality to input
@@ -34,7 +34,7 @@ void AAGCharacterParent::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 void AAGCharacterParent::UpdateHp(int32 _damage)
 {
-	hp -= _damage;
+	Hp -= _damage;
 }
 
 
