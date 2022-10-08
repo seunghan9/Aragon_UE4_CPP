@@ -4,6 +4,8 @@
 #include "AGPlayer.h"
 #include "GameFramework\SpringArmComponent.h"
 #include "Camera\CameraComponent.h"
+#include "AGPlayerController.h"
+#include "Kismet/KismetMathLibrary.h"
 
 AAGPlayer::AAGPlayer()
 {
@@ -17,18 +19,35 @@ AAGPlayer::AAGPlayer()
 
 	SpringArm->TargetArmLength = 1300.f;
 	SpringArm->SetWorldRotation(FRotator(-60.f, 0.f, 0.f));
+	SpringArm->bInheritYaw = false;
+	SpringArm->bInheritPitch = false;
+	SpringArm->bInheritRoll = false;
 
 }
 
 
+void AAGPlayer::BeginPlay()
+{
+	Super::BeginPlay();
+	MyPlayerController = Cast<AAGPlayerController>(GetController());
+}
+
 void AAGPlayer::MoveLeftRight(float _Value)
 {
-	AddMovementInput(GetActorRightVector(), _Value);
+	FRotator Temp;
+	Temp.Roll = 0;
+	Temp.Pitch = 0;
+	Temp.Yaw = 0;
+	AddMovementInput(UKismetMathLibrary::GetRightVector(Temp), _Value);
 }
 
 void AAGPlayer::MoveUpDown(float _Value)
 {
-	AddMovementInput(GetActorForwardVector(), _Value);
+	FRotator Temp;
+	Temp.Roll = 0;
+	Temp.Pitch = 0;
+	Temp.Yaw = 0;
+	AddMovementInput(UKismetMathLibrary::GetForwardVector(Temp), _Value);
 }
 
 void AAGPlayer::PimaryAttack()

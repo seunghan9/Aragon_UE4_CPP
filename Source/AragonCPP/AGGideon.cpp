@@ -3,6 +3,8 @@
 
 #include "AGGideon.h"
 #include "AGAnimInstance.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "AGPlayerController.h"
 
 AAGGideon::AAGGideon()
 {
@@ -17,11 +19,14 @@ AAGGideon::AAGGideon()
 	{
 		GetMesh()->SetSkeletalMesh(sm.Object);
 	}
+	
 }
 
 void AAGGideon::BeginPlay()
 {
 	Super::BeginPlay();
+
+	GetMesh()->GetAnimClass();
 }
 
 
@@ -29,6 +34,11 @@ void AAGGideon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	FRotator Temp;
+	Temp.Yaw = (UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), MyPlayerController->MouseLocation)).Yaw;
+	Temp.Roll = 0.f;
+	Temp.Pitch = 0.f;
+	SetActorRotation(Temp);
 }
 
 void AAGGideon::PimaryAttack()

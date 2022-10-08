@@ -16,6 +16,7 @@ class ARAGONCPP_API AAGPlayer : public AAGCharacterParent
 public:
 	AAGPlayer();
 
+	virtual void BeginPlay() override;
 protected:
 
 	UPROPERTY(VisibleAnywhere)
@@ -23,6 +24,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* Camera;
+
+	UPROPERTY(VisibleAnywhere)
+	class AAGPlayerController* MyPlayerController;
 
 public:
 	

@@ -3,6 +3,7 @@
 
 #include "AragonCPPGameModeBase.h"
 #include "AGGideon.h"
+#include "AGPlayerController.h"
 
 AAragonCPPGameModeBase::AAragonCPPGameModeBase()
 {
