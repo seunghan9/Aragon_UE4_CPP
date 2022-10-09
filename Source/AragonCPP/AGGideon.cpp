@@ -2,7 +2,7 @@
 
 
 #include "AGGideon.h"
-#include "AGAnimInstance.h"
+#include "AGGideonAnimInstance.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "AGPlayerController.h"
 
@@ -26,7 +26,14 @@ void AAGGideon::BeginPlay()
 {
 	Super::BeginPlay();
 
-	GetMesh()->GetAnimClass();
+	GideonAnimInstance->AttackA.AddDynamic(this, &AAGGideon::SpwanPimaryAttack);
+}
+
+void AAGGideon::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	GideonAnimInstance = Cast<UAGGideonAnimInstance>(GetMesh()->GetAnimInstance());
 }
 
 
@@ -35,15 +42,24 @@ void AAGGideon::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	FRotator Temp;
+
 	Temp.Yaw = (UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), MyPlayerController->MouseLocation)).Yaw;
+
 	Temp.Roll = 0.f;
+
 	Temp.Pitch = 0.f;
+
 	SetActorRotation(Temp);
 }
 
 void AAGGideon::PimaryAttack()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Gideon Attack"));
+	GideonAnimInstance->Play_Montage(GideonAnimInstance->Attack1Montage);
+}
+
+void AAGGideon::SpwanPimaryAttack()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Spawn"));
 }
 
 void AAGGideon::Skill1()

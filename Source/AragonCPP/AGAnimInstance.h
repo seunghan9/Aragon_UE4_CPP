@@ -2,6 +2,7 @@
 
 #pragma once
 
+
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
 #include "AGAnimInstance.generated.h"
@@ -21,32 +22,15 @@ public:
 
 
 
-public:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = pawn, Meta = (AllowPrivateAccess = true))
-	UAnimMontage* Attack1Montage;
+private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = pawn, Meta = (AllowPrivateAccess = true))
-	UAnimMontage* Attack2Montage;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = pawn, Meta = (AllowPrivateAccess = true))
-	UAnimMontage* Attack3Montage;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = pawn, Meta = (AllowPrivateAccess = true))
-	UAnimMontage* Skill1Montage;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = pawn, Meta = (AllowPrivateAccess = true))
-	UAnimMontage* Skill2Montage;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = pawn, Meta = (AllowPrivateAccess = true))
-	UAnimMontage* Skill3Montage;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = pawn)
 	float Speed;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = pawn)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = pawn, Meta = (AllowPrivateAccess = true))
 	float Direction;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = pawn)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = pawn, Meta = (AllowPrivateAccess = true))
 	float Yaw;
 
-protected:
-	void PlayMontage(UAnimMontage* _Montage);
+public:
+	void Play_Montage(UAnimMontage* _Montage);
 };

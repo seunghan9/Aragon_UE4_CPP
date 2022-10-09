@@ -30,14 +30,14 @@ public:
 
 protected:
 	UPROPERTY()
-	int32 Hp;
+	float Hp;
 
 	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category = Battle)
-	int32 MaxHp;
+	float MaxHp;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Battle)
-	int32 DefaultDamage;
+	float DefaultDamage;
 
 protected:
-	void UpdateHp(int32 _damage);
+	void UpdateHp(float _damage);
 };

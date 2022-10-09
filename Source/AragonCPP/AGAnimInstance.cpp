@@ -24,10 +24,12 @@ void UAGAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 }
 
-void UAGAnimInstance::PlayMontage(UAnimMontage* _Montage)
+
+
+void UAGAnimInstance::Play_Montage(UAnimMontage* _Montage)
 {
 	if (!Montage_IsPlaying(_Montage))
 	{
-		PlayMontage(_Montage);
+		Montage_Play(_Montage);
 	}
 }

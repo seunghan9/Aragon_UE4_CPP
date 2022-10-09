@@ -26,6 +26,7 @@ public:
 	void Skill1();
 	void Skill2();
 	void Skill3();
+
 	UPROPERTY()
 	FVector MouseLocation;
 
