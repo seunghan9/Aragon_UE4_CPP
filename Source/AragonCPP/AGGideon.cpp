@@ -3,8 +3,9 @@
 
 #include "AGGideon.h"
 #include "AGGideonAnimInstance.h"
-#include "Kismet/KismetMathLibrary.h"
 #include "AGPlayerController.h"
+#include "GideonPrimaryAttack.h"
+#include "Kismet/GameplayStatics.h" 
 
 AAGGideon::AAGGideon()
 {
@@ -19,6 +20,16 @@ AAGGideon::AAGGideon()
 	{
 		GetMesh()->SetSkeletalMesh(sm.Object);
 	}
+
+	ConstructorHelpers::FObjectFinder<UParticleSystemComponent> PSAC(TEXT("
+		
+		
+		
+		
+		
+		
+		
+		'"));
 	
 }
 
@@ -26,7 +37,7 @@ void AAGGideon::BeginPlay()
 {
 	Super::BeginPlay();
 
-	GideonAnimInstance->AttackA.AddDynamic(this, &AAGGideon::SpwanPimaryAttack);
+	GideonAnimInstance->AttackA.AddDynamic(this, &AAGGideon::SpawnPimaryAttack);
 }
 
 void AAGGideon::PostInitializeComponents()
@@ -41,15 +52,8 @@ void AAGGideon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	FRotator Temp;
-
-	Temp.Yaw = (UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), MyPlayerController->MouseLocation)).Yaw;
-
-	Temp.Roll = 0.f;
-
-	Temp.Pitch = 0.f;
-
-	SetActorRotation(Temp);
+	
+	SetActorRotation(MyPlayerController->LookRotation);
 }
 
 void AAGGideon::PimaryAttack()
@@ -57,9 +61,16 @@ void AAGGideon::PimaryAttack()
 	GideonAnimInstance->Play_Montage(GideonAnimInstance->Attack1Montage);
 }
 
-void AAGGideon::SpwanPimaryAttack()
+void AAGGideon::SpawnPimaryAttack()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Spawn"));
+	
+	FVector PimarySpawnLocation = GetMesh()->GetSocketLocation(TEXT("Muzzle_01"));
+
+	UGameplayStatics::SpawnEmitterAttached()
+
+	const FRotator PimarySpawnRotation = MyPlayerController->LookRotation;
+
+	GetWorld()->SpawnActor<AGideonPrimaryAttack>(PimarySpawnLocation, PimarySpawnRotation);
 }
 
 void AAGGideon::Skill1()

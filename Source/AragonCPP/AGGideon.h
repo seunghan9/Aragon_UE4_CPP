@@ -22,7 +22,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION()
-	void SpwanPimaryAttack();
+	void SpawnPimaryAttack();
 
 
 	

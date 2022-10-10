@@ -36,6 +36,10 @@ private:
 	UPROPERTY(EditAnywhere)
 	class UProjectileMovementComponent* AProjectile;
 
-	UFUNCTION()
-	void MyOnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UPROPERTY(EditAnywhere)
+	class UParticleSystemComponent* PrimaryAttackCast;
+
+
+	//UFUNCTION()
+	//void MyOnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };

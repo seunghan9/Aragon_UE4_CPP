@@ -3,6 +3,7 @@
 
 #include "AGPlayerController.h"
 #include "AGPlayer.h"
+#include "Kismet/KismetMathLibrary.h"
 
 void AAGPlayerController::BeginPlay()
 {
@@ -21,6 +22,13 @@ void AAGPlayerController::Tick(float DeltaTime)
 	{
 		MouseLocation = hit.Location;
 	}
+
+	LookRotation.Yaw = (UKismetMathLibrary::FindLookAtRotation(ControlledPawn->GetActorLocation(),MouseLocation)).Yaw;
+
+	LookRotation.Roll = 0.f;
+
+	LookRotation.Pitch = 0.f;
+
 }
 
 void AAGPlayerController::SetupInputComponent()

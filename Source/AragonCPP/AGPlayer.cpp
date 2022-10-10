@@ -22,7 +22,7 @@ AAGPlayer::AAGPlayer()
 	SpringArm->bInheritYaw = false;
 	SpringArm->bInheritPitch = false;
 	SpringArm->bInheritRoll = false;
-
+	SpringArm->bDoCollisionTest = false;
 }
 
 
@@ -35,18 +35,14 @@ void AAGPlayer::BeginPlay()
 void AAGPlayer::MoveLeftRight(float _Value)
 {
 	FRotator Temp;
-	Temp.Roll = 0;
-	Temp.Pitch = 0;
-	Temp.Yaw = 0;
+
 	AddMovementInput(UKismetMathLibrary::GetRightVector(Temp), _Value);
 }
 
 void AAGPlayer::MoveUpDown(float _Value)
 {
 	FRotator Temp;
-	Temp.Roll = 0;
-	Temp.Pitch = 0;
-	Temp.Yaw = 0;
+
 	AddMovementInput(UKismetMathLibrary::GetForwardVector(Temp), _Value);
 }
 
