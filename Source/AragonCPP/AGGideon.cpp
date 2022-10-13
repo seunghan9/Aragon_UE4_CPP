@@ -20,17 +20,6 @@ AAGGideon::AAGGideon()
 	{
 		GetMesh()->SetSkeletalMesh(sm.Object);
 	}
-
-	ConstructorHelpers::FObjectFinder<UParticleSystemComponent> PSAC(TEXT("
-		
-		
-		
-		
-		
-		
-		
-		'"));
-	
 }
 
 void AAGGideon::BeginPlay()
@@ -65,8 +54,6 @@ void AAGGideon::SpawnPimaryAttack()
 {
 	
 	FVector PimarySpawnLocation = GetMesh()->GetSocketLocation(TEXT("Muzzle_01"));
-
-	UGameplayStatics::SpawnEmitterAttached()
 
 	const FRotator PimarySpawnRotation = MyPlayerController->LookRotation;
 
