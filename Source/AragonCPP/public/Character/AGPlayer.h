@@ -28,6 +28,22 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	class AAGPlayerController* MyPlayerController;
 
+	/*Q 스킬을 사용중인가?*/
+	UPROPERTY(VisibleAnywhere)
+	bool CastingQSkill;
+
+	/*E 스킬을 사용중인가?*/
+	UPROPERTY(VisibleAnywhere)
+	bool CastingESkill;
+
+	/*R 스킬을 사용중인가?*/
+	UPROPERTY(VisibleAnywhere)
+	bool CastingRSkill;
+
+	/*마우스를 봐야하는가?*/
+	UPROPERTY(VisibleAnywhere)
+	bool SetLookRotate;
+
 public:
 	
 	void MoveLeftRight(float _Value);
@@ -36,10 +52,10 @@ public:
 	
 	virtual void PimaryAttack();
 	
-	virtual void Skill1();
+	virtual void SkillQ();
 	
-	virtual void Skill2();
+	virtual void SkillE();
 
-	virtual void Skill3();
+	virtual void SkillR();
 
 };

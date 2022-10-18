@@ -34,7 +34,7 @@ AGideonPrimaryAttack::AGideonPrimaryAttack()
 
 	ACollision->SetSphereRadius(32.f);
 
-	AProjectile->InitialSpeed = 1500.f;
+	AProjectile->InitialSpeed = 1000.f;
 
 	AProjectile->ProjectileGravityScale = 0.f;
 

@@ -28,11 +28,11 @@ public:
 
 	void PimaryAttack();
 
-	void Skill1();
+	void SkillQ();
 
-	void Skill2();
+	void SkillE();
 
-	void Skill3();
+	void SkillR();
 
 
 

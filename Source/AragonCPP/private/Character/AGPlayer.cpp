@@ -23,6 +23,7 @@ AAGPlayer::AAGPlayer()
 	SpringArm->bInheritPitch = false;
 	SpringArm->bInheritRoll = false;
 	SpringArm->bDoCollisionTest = false;
+	SetLookRotate = true;
 }
 
 
@@ -51,17 +52,17 @@ void AAGPlayer::PimaryAttack()
 	UE_LOG(LogTemp, Warning, TEXT("Parent Attack"));
 }
 
-void AAGPlayer::Skill1()
+void AAGPlayer::SkillQ()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Parent Skill1"));
 }
 
-void AAGPlayer::Skill2()
+void AAGPlayer::SkillE()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Parent Skill2"));
 }
 
-void AAGPlayer::Skill3()
+void AAGPlayer::SkillR()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Parent Skill3"));
 }

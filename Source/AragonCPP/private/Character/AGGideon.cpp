@@ -51,9 +51,13 @@ void AAGGideon::BeginPlay()
 {
 	Super::BeginPlay();
 
-	GideonAnimInstance->AttackA.AddDynamic(this, &AAGGideon::SpawnPimaryAttack);
+	GideonAnimInstance->PrimaryAttack.AddDynamic(this, &AAGGideon::SpawnPimaryAttack);
 
 	GideonAnimInstance->SkillQ.AddDynamic(this, &AAGGideon::SpawnSkillQ);
+
+	GideonAnimInstance->SaveAttack.AddDynamic(this, &AAGGideon::SaveAttack);
+
+	GideonAnimInstance->ResetAttack.AddDynamic(this, &AAGGideon::ResetAttack);
 
 }
 
@@ -69,29 +73,95 @@ void AAGGideon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (SetLookRotate)
+	{
+		SetActorRotation(MyPlayerController->LookRotation);
+	}
 	
-	SetActorRotation(MyPlayerController->LookRotation);
 }
 
 void AAGGideon::PimaryAttack()
 {
-	GideonAnimInstance->Play_Montage(GideonAnimInstance->Attack1Montage);
+	if (!bIsAttack && !CastingQSkill && !CastingESkill && !CastingRSkill)
+	{
+		CurrentPrimaryAttackCombo = PrimaryAttackCombo::PrimaryAttackA;
+		bIsAttack = true;
+
+		if(!GideonAnimInstance->Play_Montage(GideonAnimInstance->Attack1Montage))
+		{
+			ResetAttack();
+		}
+	}
+	else
+	{
+		bSaveAttack = true;
+	}
 }
 
+void AAGGideon::SaveAttack()
+{
+	if (bSaveAttack)
+	{
+		bSaveAttack = false;
+		switch (CurrentPrimaryAttackCombo)
+		{
+		case PrimaryAttackCombo::PrimaryAttackA:
+			if (!GideonAnimInstance->Play_Montage(GideonAnimInstance->Attack2Montage))
+			{
+				ResetAttack();
+			}
+			CurrentPrimaryAttackCombo = PrimaryAttackCombo::PrimaryAttackB;
+			break;
+		case PrimaryAttackCombo::PrimaryAttackB:
+			if (!GideonAnimInstance->Play_Montage(GideonAnimInstance->Attack3Montage))
+			{
+				ResetAttack();
+			}
+			CurrentPrimaryAttackCombo = PrimaryAttackCombo::PrimaryAttackC;
+			break;
+		case PrimaryAttackCombo::PrimaryAttackC:
+			if (!GideonAnimInstance->Play_Montage(GideonAnimInstance->Attack1Montage))
+			{
+				ResetAttack();
+			}
+			CurrentPrimaryAttackCombo = PrimaryAttackCombo::PrimaryAttackA;
+			break;
+		}
+	}
+}
+
+void AAGGideon::ResetAttack()
+{
+	CurrentPrimaryAttackCombo = PrimaryAttackCombo::PrimaryAttackNone;
+	bIsAttack = false;
+	bSaveAttack = false;
+	UE_LOG(LogTemp, Warning, TEXT("ResetAttack"));
+
+}
 void AAGGideon::SpawnPimaryAttack()
 {
-	
-	FVector PimarySpawnLocation = GetMesh()->GetSocketLocation(TEXT("Muzzle_01"));
+	FVector PimarySpawnLocation;
 
-	const FRotator PimarySpawnRotation = MyPlayerController->LookRotation;
+	if (CurrentPrimaryAttackCombo == PrimaryAttackCombo::PrimaryAttackA || CurrentPrimaryAttackCombo == PrimaryAttackCombo::PrimaryAttackC)
+	{
+		PimarySpawnLocation = GetMesh()->GetSocketLocation(TEXT("Muzzle_01"));
+		UGameplayStatics::SpawnEmitterAttached(PimaryAttackCast, GetMesh(), TEXT("Muzzle_01"), FVector::ZeroVector, FRotator::ZeroRotator, FVector(1.2f));
+	}
+	else
+	{
+		PimarySpawnLocation = GetMesh()->GetSocketLocation(TEXT("Muzzle_02"));
+		UGameplayStatics::SpawnEmitterAttached(PimaryAttackCast, GetMesh(), TEXT("Muzzle_02"), FVector::ZeroVector, FRotator::ZeroRotator, FVector(1.2f));
+	}
+
+	FRotator PimarySpawnRotation = MyPlayerController->LookRotation;
 
 	GetWorld()->SpawnActor<AGideonPrimaryAttack>(PimarySpawnLocation, PimarySpawnRotation);
 
-	UGameplayStatics::SpawnEmitterAttached(PimaryAttackCast, GetMesh(), TEXT("Muzzle_01"),FVector::ZeroVector,FRotator::ZeroRotator,FVector(1.5f));
 }
 
 void AAGGideon::SpawnSkillQ()
 {
+
 	const FRotator SkillQSpawnRotation = MyPlayerController->LookRotation;
 
 	FVector SkillQSpawnLocation = GetMesh()->GetSocketLocation(TEXT("Muzzle_02"));
@@ -100,14 +170,11 @@ void AAGGideon::SpawnSkillQ()
 	{
 		SkillQSpawnLocation.X += -250.f;
 	}
+
 	SkillQSpawnLocation.Y += 0.f;
 	SkillQSpawnLocation.Z += 250.f;
 
-	
-
 	GetWorld()->SpawnActor<AGideonQSkill>(SkillQSpawnLocation, SkillQSpawnRotation);
-
-	
 
 	FTransform SpawnSkillQPortalTranceform;
 	SpawnSkillQPortalTranceform.SetLocation(SkillQSpawnLocation);
@@ -115,23 +182,25 @@ void AAGGideon::SpawnSkillQ()
 	
 	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(),SkillQCastPortal, SpawnSkillQPortalTranceform);
 
+	ResetAttack();
+	CastingQSkill = false;
 }
 
-void AAGGideon::Skill1()
+void AAGGideon::SkillQ()
 {
 	if (GideonAnimInstance->Play_Montage(GideonAnimInstance->Skill1Montage))
 	{
 		UGameplayStatics::SpawnEmitterAttached(SkillQCast, GetMesh(), TEXT("Muzzle_02"), FVector::ZeroVector, FRotator::ZeroRotator, FVector(1.5f));
 	}
-	
+	CastingQSkill = true;
 }
 
-void AAGGideon::Skill2()
+void AAGGideon::SkillE()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Gideon Skill2"));
 }
 
-void AAGGideon::Skill3()
+void AAGGideon::SkillR()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Gideon Skill3"));
 }

@@ -44,11 +44,11 @@ void AAGPlayerController::SetupInputComponent()
 
 	InputComponent->BindAction(TEXT("PrimaryAttack"), EInputEvent::IE_Pressed, this, &AAGPlayerController::PimaryAttack);
 
-	InputComponent->BindAction(TEXT("Skill1"), EInputEvent::IE_Pressed, this, &AAGPlayerController::Skill1);
+	InputComponent->BindAction(TEXT("SkillQ"), EInputEvent::IE_Pressed, this, &AAGPlayerController::SkillQ);
 
-	InputComponent->BindAction(TEXT("Skill2"), EInputEvent::IE_Pressed, this, &AAGPlayerController::Skill2);
+	InputComponent->BindAction(TEXT("SkillE"), EInputEvent::IE_Pressed, this, &AAGPlayerController::SkillE);
 
-	InputComponent->BindAction(TEXT("Skill3"), EInputEvent::IE_Pressed, this, &AAGPlayerController::Skill3);
+	InputComponent->BindAction(TEXT("SkillR"), EInputEvent::IE_Pressed, this, &AAGPlayerController::SkillR);
 }
 
 void AAGPlayerController::MoveLeftRight(float _Value)
@@ -66,17 +66,17 @@ void AAGPlayerController::PimaryAttack()
 	ControlledPawn->PimaryAttack();
 }
 
-void AAGPlayerController::Skill1()
+void AAGPlayerController::SkillQ()
 {
-	ControlledPawn->Skill1();
+	ControlledPawn->SkillQ();
 }
 
-void AAGPlayerController::Skill2()
+void AAGPlayerController::SkillE()
 {
-	ControlledPawn->Skill2();
+	ControlledPawn->SkillE();
 }
 
-void AAGPlayerController::Skill3()
+void AAGPlayerController::SkillR()
 {
-	ControlledPawn->Skill3();
+	ControlledPawn->SkillR();
 }

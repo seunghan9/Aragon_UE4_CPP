@@ -25,17 +25,17 @@ void AAGSavarog::PimaryAttack()
 	UE_LOG(LogTemp, Warning, TEXT("AAGSavarog Attack"));
 }
 
-void AAGSavarog::Skill1()
+void AAGSavarog::SkillQ()
 {
 	UE_LOG(LogTemp, Warning, TEXT("AAGSavarog Skill1"));
 }
 
-void AAGSavarog::Skill2()
+void AAGSavarog::SkillE()
 {
 	UE_LOG(LogTemp, Warning, TEXT("AAGSavarog Skill2"));
 }
 
-void AAGSavarog::Skill3()
+void AAGSavarog::SkillR()
 {
 	UE_LOG(LogTemp, Warning, TEXT("AAGSavarog Skill3"));
 }

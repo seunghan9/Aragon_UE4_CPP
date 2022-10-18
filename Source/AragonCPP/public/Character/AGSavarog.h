@@ -20,7 +20,7 @@ public:
 protected:
 	UFUNCTION()
 	virtual void PimaryAttack() override;
-	virtual void Skill1() override;
-	virtual void Skill2() override;
-	virtual void Skill3() override;
+	virtual void SkillQ() override;
+	virtual void SkillE() override;
+	virtual void SkillR() override;
 };

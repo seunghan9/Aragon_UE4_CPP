@@ -6,9 +6,8 @@
 
 // Sets default values
 AAGCharacterParent::AAGCharacterParent()
-	:Hp(MaxHp)
 {
-
+	bIsAttack = false;
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
@@ -32,10 +31,6 @@ void AAGCharacterParent::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
-void AAGCharacterParent::UpdateHp(float _damage)
-{
-	Hp -= _damage;
-}
 
 
 

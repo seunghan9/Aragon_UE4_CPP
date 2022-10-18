@@ -29,15 +29,10 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 protected:
-	UPROPERTY()
-	float Hp;
 
-	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category = Battle)
-	float MaxHp;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Battle)
-	float DefaultDamage;
+	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category = Attack)
+	bool bIsAttack;
 
 protected:
-	void UpdateHp(float _damage);
+
 };

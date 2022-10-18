@@ -43,13 +43,22 @@ UAGGideonAnimInstance::UAGGideonAnimInstance()
 
 }
 
-/*Attack A Notify ½ÇÇà*/
-void UAGGideonAnimInstance::AnimNotify_GideonAttackA()
+void UAGGideonAnimInstance::AnimNotify_GideonAttack()
 {
-	AttackA.Broadcast();
+	PrimaryAttack.Broadcast();
 }
 
 void UAGGideonAnimInstance::AnimNotify_GideonSkillQ()
 {
 	SkillQ.Broadcast();
+}
+
+void UAGGideonAnimInstance::AnimNotify_SaveAttack()
+{
+	SaveAttack.Broadcast();
+}
+
+void UAGGideonAnimInstance::AnimNotify_ResetCombo()
+{
+	ResetAttack.Broadcast();
 }

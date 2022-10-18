@@ -21,18 +21,31 @@ public:
 	UAGGideonAnimInstance();
 
 	/*기본공격 델리게이트 생성*/
-	FDelegateName AttackA;
+	FDelegateName PrimaryAttack;
+
+	FDelegateName SaveAttack;
+
+	FDelegateName ResetAttack;
 
 	/*스킬 Q 델리게이트 생성*/
 	FDelegateName SkillQ;
 
 private:
 
-	/*Attack A Notify 실행*/
+	/*Attack Notify 실행*/
 	UFUNCTION()
-	void AnimNotify_GideonAttackA();
+	void AnimNotify_GideonAttack();
 
+	/*Skill Q Notify 실행*/
 	UFUNCTION()
 	void AnimNotify_GideonSkillQ();
+
+	/*콤보 공격*/
+	UFUNCTION()
+	void AnimNotify_SaveAttack();
+
+	/*콤보 리셋*/
+	UFUNCTION()
+	void AnimNotify_ResetCombo();
 
 };

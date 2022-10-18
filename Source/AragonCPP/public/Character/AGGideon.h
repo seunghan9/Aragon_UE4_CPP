@@ -8,6 +8,13 @@
 #include "Character/AGPlayer.h"
 #include "AGGideon.generated.h"
 
+enum class PrimaryAttackCombo
+{
+	PrimaryAttackNone,
+	PrimaryAttackA,
+	PrimaryAttackB,
+	PrimaryAttackC
+};
 /**
  * 
  */
@@ -26,7 +33,12 @@ public:
 
 	UFUNCTION()
 	void SpawnSkillQ();
-	
+
+	UFUNCTION()
+	void SaveAttack();
+
+	UFUNCTION()
+	void ResetAttack();
 
 
 protected:
@@ -35,15 +47,27 @@ protected:
 
 	virtual void BeginPlay() override;
 
+
 	virtual void PostInitializeComponents() override;
 
+	UPROPERTY()
 	class UAGGideonAnimInstance* GideonAnimInstance;
 
+	UPROPERTY()
 	class UParticleSystem* PimaryAttackCast;
 
+	UPROPERTY()
 	class UParticleSystem* SkillQCast;
 
+	UPROPERTY()
 	class UParticleSystem* SkillQCastPortal;
+
+
+	PrimaryAttackCombo CurrentPrimaryAttackCombo;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	bool bSaveAttack;
+
 protected:
 
 
@@ -51,12 +75,12 @@ protected:
 	virtual void PimaryAttack() override;
 
 	UFUNCTION()
-	virtual void Skill1() override;
+	virtual void SkillQ() override;
 
 	UFUNCTION()
-	virtual void Skill2() override;
+	virtual void SkillE() override;
 
 	UFUNCTION()
-	virtual void Skill3() override;
+	virtual void SkillR() override;
 
 };
