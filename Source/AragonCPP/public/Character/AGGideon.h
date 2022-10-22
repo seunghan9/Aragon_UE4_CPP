@@ -29,7 +29,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION()
-	void SpawnPimaryAttack();
+	void SpawnPrimaryAttack();
 
 	UFUNCTION()
 	void SpawnSkillQ();
@@ -46,15 +46,14 @@ protected:
 	// Called when the game starts or when spawned
 
 	virtual void BeginPlay() override;
-
-
+	
 	virtual void PostInitializeComponents() override;
 
 	UPROPERTY()
 	class UAGGideonAnimInstance* GideonAnimInstance;
 
 	UPROPERTY()
-	class UParticleSystem* PimaryAttackCast;
+	class UParticleSystem* PrimaryAttackCast;
 
 	UPROPERTY()
 	class UParticleSystem* SkillQCast;
@@ -68,11 +67,11 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	bool bSaveAttack;
 
+	
 protected:
 
-
 	UFUNCTION()
-	virtual void PimaryAttack() override;
+	virtual void PrimaryAttack() override;
 
 	UFUNCTION()
 	virtual void SkillQ() override;

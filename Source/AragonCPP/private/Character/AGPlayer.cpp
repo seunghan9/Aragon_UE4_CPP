@@ -4,6 +4,7 @@
 #include "character/AGPlayer.h"
 #include "GameFramework\SpringArmComponent.h"
 #include "Camera\CameraComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "GameFrameWork/AGPlayerController.h"
 #include "Kismet/KismetMathLibrary.h"
 
@@ -24,6 +25,8 @@ AAGPlayer::AAGPlayer()
 	SpringArm->bInheritRoll = false;
 	SpringArm->bDoCollisionTest = false;
 	SetLookRotate = true;
+
+	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Player"));
 }
 
 
@@ -47,7 +50,7 @@ void AAGPlayer::MoveUpDown(float _Value)
 	AddMovementInput(UKismetMathLibrary::GetForwardVector(Temp), _Value);
 }
 
-void AAGPlayer::PimaryAttack()
+void AAGPlayer::PrimaryAttack()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Parent Attack"));
 }

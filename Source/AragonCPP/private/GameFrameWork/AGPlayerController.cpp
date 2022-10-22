@@ -63,7 +63,7 @@ void AAGPlayerController::MoveUpDown(float _Value)
 
 void AAGPlayerController::PimaryAttack()
 {
-	ControlledPawn->PimaryAttack();
+	ControlledPawn->PrimaryAttack();
 }
 
 void AAGPlayerController::SkillQ()

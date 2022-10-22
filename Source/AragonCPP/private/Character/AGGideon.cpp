@@ -2,6 +2,8 @@
 
 
 #include "Character/AGGideon.h"
+
+#include "BattleSystemComponent.h"
 #include "Animation/AGGideonAnimInstance.h"
 #include "GameFrameWork/AGPlayerController.h"
 #include "Actor/GideonPrimaryAttack.h"
@@ -12,13 +14,12 @@
 
 AAGGideon::AAGGideon()
 {
-	/*Gideon 메시 불러오기*/
+	
 	ConstructorHelpers::FObjectFinder<USkeletalMesh> sm(TEXT("SkeletalMesh'/Game/ParagonGideon/Characters/Heroes/Gideon/Meshes/Gideon.Gideon'"));
 
-	/*Gideon 메시 위치 설정*/
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.f, 0.f, -88.f), FRotator(0.f, -90.f, 0.f));
 
-	/*Gideon 메시 넣기*/
+	
 	if (sm.Succeeded())
 	{
 		GetMesh()->SetSkeletalMesh(sm.Object);
@@ -28,7 +29,7 @@ AAGGideon::AAGGideon()
 
 	if (PS.Succeeded())
 	{
-		PimaryAttackCast = PS.Object;
+		PrimaryAttackCast = PS.Object;
 	}
 
 	ConstructorHelpers::FObjectFinder<UParticleSystem> SQC(TEXT("ParticleSystem'/Game/ParagonGideon/FX/Particles/Gideon/Abilities/ProjectileMeteor/FX/P_Gideon_RMB_CastPortal.P_Gideon_RMB_CastPortal'"));
@@ -45,13 +46,16 @@ AAGGideon::AAGGideon()
 		SkillQCastPortal = SQCP.Object;
 	}
 
+	
+	BattleSystem->SetMaxHp(80.f);
+	BattleSystem->SetHp(BattleSystem->GetMaxHp());
 }
 
 void AAGGideon::BeginPlay()
 {
 	Super::BeginPlay();
 
-	GideonAnimInstance->PrimaryAttack.AddDynamic(this, &AAGGideon::SpawnPimaryAttack);
+	GideonAnimInstance->PrimaryAttack.AddDynamic(this, &AAGGideon::SpawnPrimaryAttack);
 
 	GideonAnimInstance->SkillQ.AddDynamic(this, &AAGGideon::SpawnSkillQ);
 
@@ -72,15 +76,20 @@ void AAGGideon::PostInitializeComponents()
 void AAGGideon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	if (SetLookRotate)
+	if(IsValid(MyPlayerController))
 	{
-		SetActorRotation(MyPlayerController->LookRotation);
+		if (SetLookRotate)
+		{
+			SetActorRotation(MyPlayerController->LookRotation);
+		}
 	}
+	
 	
 }
 
-void AAGGideon::PimaryAttack()
+
+
+void AAGGideon::PrimaryAttack()
 {
 	if (!bIsAttack && !CastingQSkill && !CastingESkill && !CastingRSkill)
 	{
@@ -135,27 +144,27 @@ void AAGGideon::ResetAttack()
 	CurrentPrimaryAttackCombo = PrimaryAttackCombo::PrimaryAttackNone;
 	bIsAttack = false;
 	bSaveAttack = false;
-	UE_LOG(LogTemp, Warning, TEXT("ResetAttack"));
-
 }
-void AAGGideon::SpawnPimaryAttack()
+void AAGGideon::SpawnPrimaryAttack()
 {
-	FVector PimarySpawnLocation;
+	FVector PrimarySpawnLocation;
 
 	if (CurrentPrimaryAttackCombo == PrimaryAttackCombo::PrimaryAttackA || CurrentPrimaryAttackCombo == PrimaryAttackCombo::PrimaryAttackC)
 	{
-		PimarySpawnLocation = GetMesh()->GetSocketLocation(TEXT("Muzzle_01"));
-		UGameplayStatics::SpawnEmitterAttached(PimaryAttackCast, GetMesh(), TEXT("Muzzle_01"), FVector::ZeroVector, FRotator::ZeroRotator, FVector(1.2f));
+		PrimarySpawnLocation = GetMesh()->GetSocketLocation(TEXT("Muzzle_01"));
+		UGameplayStatics::SpawnEmitterAttached(PrimaryAttackCast, GetMesh(), TEXT("Muzzle_01"), FVector::ZeroVector, FRotator::ZeroRotator, FVector(1.2f));
 	}
 	else
 	{
-		PimarySpawnLocation = GetMesh()->GetSocketLocation(TEXT("Muzzle_02"));
-		UGameplayStatics::SpawnEmitterAttached(PimaryAttackCast, GetMesh(), TEXT("Muzzle_02"), FVector::ZeroVector, FRotator::ZeroRotator, FVector(1.2f));
+		PrimarySpawnLocation = GetMesh()->GetSocketLocation(TEXT("Muzzle_02"));
+		UGameplayStatics::SpawnEmitterAttached(PrimaryAttackCast, GetMesh(), TEXT("Muzzle_02"), FVector::ZeroVector, FRotator::ZeroRotator, FVector(1.2f));
 	}
 
-	FRotator PimarySpawnRotation = MyPlayerController->LookRotation;
+	FRotator PrimarySpawnRotation = MyPlayerController->LookRotation;
 
-	GetWorld()->SpawnActor<AGideonPrimaryAttack>(PimarySpawnLocation, PimarySpawnRotation);
+	FActorSpawnParameters a;
+	a.Owner = MyPlayerController;
+	GetWorld()->SpawnActor<AGideonPrimaryAttack>(PrimarySpawnLocation, PrimarySpawnRotation,a);
 
 }
 
@@ -176,11 +185,11 @@ void AAGGideon::SpawnSkillQ()
 
 	GetWorld()->SpawnActor<AGideonQSkill>(SkillQSpawnLocation, SkillQSpawnRotation);
 
-	FTransform SpawnSkillQPortalTranceform;
-	SpawnSkillQPortalTranceform.SetLocation(SkillQSpawnLocation);
-	SpawnSkillQPortalTranceform.SetRotation((FQuat)SkillQSpawnRotation);
+	FTransform SpawnSkillQPortalTransform;
+	SpawnSkillQPortalTransform.SetLocation(SkillQSpawnLocation);
+	SpawnSkillQPortalTransform.SetRotation(static_cast<FQuat>(SkillQSpawnRotation));
 	
-	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(),SkillQCastPortal, SpawnSkillQPortalTranceform);
+	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(),SkillQCastPortal, SpawnSkillQPortalTransform);
 
 	ResetAttack();
 	CastingQSkill = false;

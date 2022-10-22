@@ -50,7 +50,7 @@ public:
 	
 	void MoveUpDown(float _Value);
 	
-	virtual void PimaryAttack();
+	virtual void PrimaryAttack();
 	
 	virtual void SkillQ();
 	

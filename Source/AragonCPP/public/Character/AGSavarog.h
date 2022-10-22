@@ -19,7 +19,7 @@ public:
 
 protected:
 	UFUNCTION()
-	virtual void PimaryAttack() override;
+	virtual void PrimaryAttack() override;
 	virtual void SkillQ() override;
 	virtual void SkillE() override;
 	virtual void SkillR() override;

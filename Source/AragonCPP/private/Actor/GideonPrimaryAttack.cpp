@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Kismet/GameplayStatics.h"
 #include "Actor/GideonPrimaryAttack.h"
 #include "GameFramework/ProjectileMovementComponent.h"
@@ -10,7 +9,6 @@
 
 // Sets default values
 AGideonPrimaryAttack::AGideonPrimaryAttack()
-	:Damage(10.f)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -38,10 +36,15 @@ AGideonPrimaryAttack::AGideonPrimaryAttack()
 
 	AProjectile->ProjectileGravityScale = 0.f;
 
-	//ACollision->OnComponentBeginOverlap.AddDynamic(this, &AGideonPrimaryAttack::MyOnComponentBeginOverlap);
+	ACollision->SetCollisionProfileName(TEXT("PlayerAttack"));
+	
+	ACollision->OnComponentBeginOverlap.AddDynamic(this, &AGideonPrimaryAttack::MyOnComponentBeginOverlap);
 
 	ACollision->SetCollisionProfileName(TEXT("PlayerIgnore"));
 
+	BattleSystem = CreateDefaultSubobject<UBattleSystemComponent>(TEXT("BattleSystem"));
+
+	BattleSystem->SetDamage(10.f);
 }
 
 // Called when the game starts or when spawned
@@ -58,10 +61,10 @@ void AGideonPrimaryAttack::Tick(float DeltaTime)
 
 }
 
-//void AGideonPrimaryAttack::MyOnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor ,UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-//{
-//	UGameplayStatics::ApplyDamage(OtherActor, Damage, GetOwner()->GetInstigatorController(), this, UDamageType::StaticClass());
-//}
+void AGideonPrimaryAttack::MyOnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor ,UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	UGameplayStatics::ApplyDamage(OtherActor, BattleSystem->GetDamage(), GetOwner()->GetInstigatorController(), this, UDamageType::StaticClass());
+}
 
 
 
